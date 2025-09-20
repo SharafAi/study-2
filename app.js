@@ -2,6 +2,8 @@ const http  = require('http');
 
 const server = http.createServer((req, res) => {
   console.log(req);
+  process.exit(); // Exit after handling one request
+
 });
 
 const PORT = 3000;
