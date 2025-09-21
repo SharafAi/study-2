@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs");
+const constants = require("constants");
 
 const server = http.createServer((req, res) => {
   console.log(req.url, req.method); //removed because output was too long ,for learning purpose only
@@ -41,13 +42,11 @@ const server = http.createServer((req, res) => {
       const fullBody = Buffer.concat(body).toString();
       console.log(fullBody);
       const params = new URLSearchParams(fullBody);
-      const bodyObject = {};
-      for (const [key, val] of params.entries()) {
-        bodyObject[key] = val;
-      }
+
+      const bodyObject = Object.fromEntries(params); //does the work easier
       console.log(bodyObject);
+      fs.writeFileSync("user.txt", JSON.stringify(bodyObject));
     });
-    fs.writeFileSync("user.txt", "sharaf");
     res.statusCode = 302;
     res.setHeader("Location", "/");
     return res.end();
