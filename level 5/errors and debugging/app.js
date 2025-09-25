@@ -7,12 +7,20 @@ const express = require('express');
 const RequestHandler = require('./user');
 
 const app = express();
-app.use((req, res, next) => {
+app.use("/", (req, res, next) => { ///try app.use, app.get, app.post
   console.log("came in first middileware ", req.url, req.method);
+  //res.send("<P>came from first middleware.</P>");
+
   next();
 });
 
-app.use((req, res, next) => {
+app.use("/", (req, res, next) => {
+  console.log("came in first middileware ", req.url, req.method);
+  res.send("<P>came from another middleware.</P>");
+});
+
+
+app.use("/submit-details", (req, res, next) => {
   console.log("came in second middileware ", req.url, req.method);
   res.send("<P>welcome to mvcrate - unbox maldives.</P>");
 });
