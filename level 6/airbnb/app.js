@@ -1,3 +1,8 @@
+//core modules
+const path = require('path');
+
+
+
 //external modules
 const express = require('express');
 
@@ -13,9 +18,8 @@ app.use(userRouter);
 app.use(hostRouter);
 
 app.use((req, res, next) => {
-  res.status(404).send('<h1>404! Your page not found on airbnb</h1>');
-})
-
+  res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+});
 
 
 const PORT = 3004;
