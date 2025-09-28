@@ -10,7 +10,7 @@ const rootDir = require('../utilities/pathUtil');
 
 hostRouter.get("/add-home", (req, res, next) => {
   console.log(req.url, req.method)
-  res.sendFile(path.join(rootDir, 'views', 'addHome.html'));
+  res.render('addHome', { pageTitle: 'add home' });
 });
 
 const RergisterdHomes = [];
@@ -19,7 +19,7 @@ const RergisterdHomes = [];
 hostRouter.post("/add-home", (req, res, next) => {
   console.log("home Rergistration successful for:", req.body, req.body.HouseName);
   RergisterdHomes.push({ housename: req.body.HouseName });
-  res.sendFile(path.join(rootDir, 'views', 'homeadded.html'));
+  res.render('homeadded', { pageTitle: 'home added successfully' });
 });
 
 exports.hostRouter = hostRouter;

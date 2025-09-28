@@ -1,0 +1,22 @@
+   <%- include('partials/head')%>
+  </head>
+  <body>
+    <%- include ('partials/header')%>
+  <!-- quick styled with ai -->
+   <main class="bg-gray-100 min-h-screen py-10">
+  <h1 class="text-red-600 text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-12">
+    Here are our registered homes:
+  </h1>
+
+  <div class="max-w-4xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <% RergisterdHomes.forEach((home) => { %>
+      <div class="bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition-transform duration-300">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= home.housename %></h2>
+        <p class="text-gray-500">Beautiful home registered in our system.</p>
+      </div>
+    <% }) %>
+  </div>
+</main>
+
+  </body>
+</html>
