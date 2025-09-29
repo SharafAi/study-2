@@ -1,18 +1,19 @@
-const RergisterdHomes = [];
+const Home = require("../models/home"); // import the class
 
 exports.getaddHome = (req, res, next) => {
-  res.render('addHome', { pageTitle: 'add home', currentPage: 'addHome',currentPage : 'addHome' })
+  res.render('addHome', { pageTitle: 'Add Home', currentPage: 'addHome' });
 }
 
 exports.postaddHome = (req, res, next) => {
-  console.log("home Rergistration successful for:", req.body);
-  RergisterdHomes.push(req.body);
-  res.render('homeadded', { pageTitle: 'home added successfully', currentPage: 'homeadded' });
+  const { houseName, price, location, rating, photoURL } = req.body;
+  
+  const home = new Home(houseName, price, location, rating, photoURL); // create instance
+  home.save(); // call save on the instance
+
+  res.render('homeadded', { pageTitle: 'Home added successfully', currentPage: 'homeadded' });
 }
 
 exports.gethomes = (req, res, next) => {
-  console.log(RergisterdHomes);
-  res.render("home", { RergisterdHomes: RergisterdHomes, pageTitle: 'airbnb home', currentPage: 'home' });
+  const RergisterdHomes = Home.fetchAll(); // call fetchAll on the class
+  res.render("home", { RergisterdHomes, pageTitle: 'Airbnb Home', currentPage: 'home' });
 }
-
-
