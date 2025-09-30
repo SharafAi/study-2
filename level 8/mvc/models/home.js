@@ -1,8 +1,10 @@
+//core modulees
 const fs = require('fs');
 const path = require('path');
 const rootDir = require('../utilities/pathUtil');
 
-module.exports = class Home { // Capitalized class name
+
+module.exports = class Home { 
   constructor(houseName, price, location, rating, photoURL){
     this.houseName = houseName;
     this.price = price;
@@ -12,18 +14,19 @@ module.exports = class Home { // Capitalized class name
   }
   
   save() {
-    RergisterdHomes.push(this);
-    const homeDataPath = path.join(rootDir, 'data', 'homes.json');
-    fs.writeFile(homeDataPath, JSON.stringify(RergisterdHomes), error => {
-      console.log("file writing concluded", error);
-    })
+    Home.fetchAll((RergisterdHomes) => {
+      RergisterdHomes.push(this);
+      const homeDataPath = path.join(rootDir, 'data', 'homes.json');
+      fs.writeFile(homeDataPath, JSON.stringify(RergisterdHomes), (error) => {
+        console.log("file writing concluded", error);
+      })
+    });
   }
 
   static fetchAll(callback) {
     const homeDataPath = path.join(rootDir, 'data', 'homes.json');
     fs.readFile(homeDataPath, (err, data) => {
-      console.log("file read:", err, data);
-      callback(!err ? JSON.parse(data) : [])
+      callback(!err ? JSON.parse(data) : []);
     });
   }
 }
