@@ -2,9 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const rootDir = require('../utilities/pathUtil');
 
-// fake database
-const RergisterdHomes = [];
-
 module.exports = class Home { // Capitalized class name
   constructor(houseName, price, location, rating, photoURL){
     this.houseName = houseName;
@@ -22,7 +19,11 @@ module.exports = class Home { // Capitalized class name
     })
   }
 
-  static fetchAll() {
-    return RergisterdHomes;
+  static fetchAll(callback) {
+    const homeDataPath = path.join(rootDir, 'data', 'homes.json');
+    fs.readFile(homeDataPath, (err, data) => {
+      console.log("file read:", err, data);
+      callback(!err ? JSON.parse(data) : [])
+    });
   }
 }

@@ -1,3 +1,4 @@
+const { RergisterdHomes } = require("../routes/hostRouter");
 const Home = require("../models/home"); // import the class
 
 exports.getaddHome = (req, res, next) => {
@@ -14,6 +15,10 @@ exports.postaddHome = (req, res, next) => {
 }
 
 exports.gethomes = (req, res, next) => {
-  const RergisterdHomes = Home.fetchAll(); // call fetchAll on the class
-  res.render("home", { RergisterdHomes, pageTitle: 'Airbnb Home', currentPage: 'home' });
+  const RergisterdHomes = Home.fetchAll(RergisterdHomes => res.render("home", {
+    RergisterdHomes: RergisterdHomes,
+    pageTitle: 'Airbnb Home',
+    currentPage: 'home'
+  })); 
+  
 }
