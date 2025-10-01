@@ -1,16 +1,16 @@
-//core modules
-const path = require('path');
-
-//external modules
-const express = require('express');
+// external modules
+const express = require("express");
 const hostRouter = express.Router();
 
-//local modules
-const rootDir = require('../utilities/pathUtil');
-const homesController = require("../controllers/homes")
+// local modules
+const hostController = require("../controllers/adminController");
 
-hostRouter.get("/add-home",homesController.getaddHome);
-hostRouter.post("/add-home", homesController.postaddHome);
+// /admin/add-home → show form
+hostRouter.get("/add-home", hostController.getaddHome);
 
-exports.hostRouter = hostRouter;
+// /admin/add-home → handle form submit
+hostRouter.post("/add-home", hostController.postaddHome);
 
+hostRouter.get("/admin-home-list", hostController.getHostHomes)
+
+module.exports = hostRouter;

@@ -1,14 +1,12 @@
 //core modules
 const path = require('path');
 
-
-
 //external modules
 const express = require('express');
 
 //local modules
-const userRouter = require('./routes/userRouter');
-const { hostRouter } = require('./routes/hostRouter');
+const storeRouter = require('./routes/storeRouter');
+const hostRouter  = require('./routes/hostRouter');
 const rootDir = require('./utilities/pathUtil');
 const errorsController = require("./controllers/errors");
 
@@ -22,7 +20,7 @@ app.set("views", "views");
 
 
 app.use(express.urlencoded());
-app.use(userRouter);
+app.use(storeRouter);
 app.use(hostRouter);
 
 app.use(express.static(path.join(__dirname, 'public')));
