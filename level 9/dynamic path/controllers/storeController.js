@@ -45,8 +45,20 @@ exports.getFavouriteList = (req, res, next) => {
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
   console.log("at homes details page", homeId);
-  res.render("store/home-detail", {
-      pageTitle: "home detail",
-      currentPage: "Home"
-    });  
+
+  Home.findById(homeId, home => {
+
+    if (!home) {
+      return res.status(404).send("Home not found");
+      res.redirect("/homes")
+    } else {
+      console.log("home details found", home);
+      res.render("store/home-detail", {
+        pageTitle: "home detail",
+        currentPage: "Home",
+        home: home // pass the found home to your template
+      });
+    }
+  });
+
 };
