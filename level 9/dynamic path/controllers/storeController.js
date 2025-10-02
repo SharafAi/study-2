@@ -42,6 +42,11 @@ exports.getFavouriteList = (req, res, next) => {
 };
 
 
+exports.postFavouriteList = (req, res, next) => {
+  console.log("came to add favourite", req.body);
+  res.redirect("/favourites");
+}
+
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
   console.log("at homes details page", homeId);
