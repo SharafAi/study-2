@@ -9,7 +9,7 @@
   </h1>
 
   <div class="max-w-4xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-  <% RergisterdHomes.forEach((home) => { %>
+  <% FavouriteHomes.forEach((home) => { %>
     <div class="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
       <!-- Home Image -->
       <img src="<%= home.photoUrl %>" alt="<%= home.HouseName %>" class="w-full h-48 object-cover" />
@@ -20,7 +20,7 @@
         <p class="text-gray-500 mb-1"><strong>Location:</strong> <%= home.location %></p>
         <p class="text-gray-500 mb-1"><strong>Price:</strong> $<%= home.price %> / night</p>
         <p class="text-yellow-500 font-bold"><strong>Rating:</strong> <%= home.rating %>/10</p>
-        <button class="bg-pink-500 p-2 rounded-2xl text-amber-50">book</button>
+        
       </div>
     </div>
   <% }) %>
