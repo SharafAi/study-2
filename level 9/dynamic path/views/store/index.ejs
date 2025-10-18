@@ -12,9 +12,10 @@
   <% RergisterdHomes.forEach((home) => { %>
     <div class="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
       <!-- Home Image -->
-  <img src="<%= home.photoURL && home.photoURL.trim() !== '' ? home.photoURL : '/images/default.png' %>" 
-     alt="<%= home.houseName %>" 
-     class="w-full h-48 object-cover" />
+<img src="<%= home.photoURL %>"
+     alt="<%= home.houseName %>"
+     class="w-full h-48 object-cover"
+     onerror="this.onerror=null; this.src='/images/default.png';" />
       <!-- Card Content -->
       <div class="p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= home.houseName %></h2>

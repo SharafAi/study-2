@@ -33,7 +33,8 @@ exports.getHostHomes = (req, res, next) => {
 exports.postaddHome = (req, res, next) => {
   const { houseName, price, location, rating, photoURL } = req.body;
 
-  const home = new Home(houseName, price, location, rating, photoURL); // ✅ lowercase: instance
+  const home = new Home(houseName, price, location, rating, photoURL? photoURL.trim() : ''
+); // ✅ lowercase: instance
   home.save(); // ✅ save instance to file
 
   res.render('admin/homeadded', { pageTitle: 'Home added successfully', currentPage: 'homeadded' });
