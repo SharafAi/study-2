@@ -2,28 +2,21 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const projectRoot = __dirname;
+// __filename is the full path to the currently running file
+const currentFile = __filename;
 
-function readFolder(folderPath) {
-  const items = fs.readdirSync(folderPath);
-  const result = {};
+try {
+  // Read file content
+  const content = fs.readFileSync(currentFile, 'utf-8');
 
-  items.forEach(item => {
-    const fullPath = path.join(folderPath, item);
-    const stats = fs.statSync(fullPath);
+  // Compress content to base64
+  const compressed = zlib.deflateSync(content).toString('base64');
 
-    if (stats.isDirectory()) {
-      result[item] = readFolder(fullPath);
-    } else {
-      const content = fs.readFileSync(fullPath, 'utf-8');
-      const compressed = zlib.deflateSync(content).toString('base64');
-      result[item] = compressed;
-    }
-  });
+  // Output JSON with filename as key
+  const output = {};
+  output[path.basename(currentFile)] = compressed;
 
-  return result;
+  console.log(JSON.stringify(output, null, 2));
+} catch (err) {
+  console.error(`Failed to read current file: ${currentFile}`, err);
 }
-
-const projectData = readFolder(projectRoot);
-
-console.log(JSON.stringify(projectData));

@@ -1,8 +1,22 @@
 const Home = require("../models/home"); // Home = class
 
 exports.getaddHome = (req, res, next) => {
-  res.render('admin/addHome', { pageTitle: 'Add Home', currentPage: 'addHome' });
+  res.render('admin/edit-homes', { pageTitle: 'Add Home', currentPage: 'addHome' });
 };
+
+
+exports.getEditHomes = (req, res, next) => {
+  const homeid = req.params.homeid;
+  const editing = req.query.editing === 'true';
+  console.log(homeid, editing);
+  res.render('admin/edit-homes', {
+    pageTitle: 'edit your home',
+    currentPage: 'host-homes',
+    editing: 'editing',
+  });
+};
+
+
 
 
 exports.getHostHomes = (req, res, next) => {

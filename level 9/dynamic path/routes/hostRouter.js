@@ -11,6 +11,8 @@ hostRouter.get("/add-home", hostController.getaddHome);
 // /admin/add-home → handle form submit
 hostRouter.post("/add-home", hostController.postaddHome);
 
-hostRouter.get("/admin-home-list", hostController.getHostHomes)
+hostRouter.get("/admin-home-list", hostController.getHostHomes);
+
+hostRouter.get("/edit-homes/:homeid", hostController.getEditHomes);
 
 module.exports = hostRouter;
