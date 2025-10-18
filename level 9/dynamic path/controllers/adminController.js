@@ -62,3 +62,17 @@ exports.postEditHomes = (req, res, next) => {
 
   res.redirect('/admin-home-list');
 };
+
+exports.postDeleteHome = (req, res, next) => {
+  const homeid = req.params.homeid;
+  console.log("came to delete home", homeid);
+  Home.deleteById(homeid, error => {
+    if (error) {
+       console.log ('error while deleting', error)
+    }
+   res.redirect('/admin-home-list');
+  })
+
+
+  
+};
