@@ -33,9 +33,9 @@ module.exports = class Home {
   }
 
   static findById(homeId, callback) {
-    this.fetchAll(homes => {  // renamed parameter to 'homes' to avoid confusion
+    this.fetchAll(homes => {  
       const homeFound = homes.find(home => home.id === homeId);
-      callback(homeFound);     // call the callback here
+      callback(homeFound);     
     });
   }
 };

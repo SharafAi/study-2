@@ -1,19 +1,32 @@
-const Home = require("../models/home"); // Home = class
+const Home = require("../models/home"); 
 
 exports.getaddHome = (req, res, next) => {
-  res.render('admin/edit-homes', { pageTitle: 'Add Home', currentPage: 'addHome' });
+  res.render('admin/edit-homes', {
+    pageTitle: 'Add Home',
+    currentPage: 'addHome',
+    editing: false,
+  });
 };
 
 
 exports.getEditHomes = (req, res, next) => {
   const homeid = req.params.homeid;
   const editing = req.query.editing === 'true';
-  console.log(homeid, editing);
-  res.render('admin/edit-homes', {
-    pageTitle: 'edit your home',
-    currentPage: 'host-homes',
-    editing: 'editing',
+
+  Home.findById(homeid, home => {
+    if (!home) {
+      console.log("home not found for editing");
+      return res.redirect("/admin/admin-home-list");
+    }
+    console.log(homeid, editing, home);
+    res.render('admin/edit-homes', {
+      pageTitle: 'edit your home',
+      currentPage: 'host-homes',
+      editing: editing,
+      home : home
+    });
   });
+
 };
 
 
@@ -22,7 +35,7 @@ exports.getEditHomes = (req, res, next) => {
 exports.getHostHomes = (req, res, next) => {
   Home.fetchAll((RergisterdHomes) => {
     res.render("admin/admin-home-list", {
-      RergisterdHomes: RergisterdHomes, //corected
+      RergisterdHomes: RergisterdHomes, 
       pageTitle: "host-home-list",
       currentPage: "host-homes"
     });
@@ -33,9 +46,9 @@ exports.getHostHomes = (req, res, next) => {
 exports.postaddHome = (req, res, next) => {
   const { houseName, price, location, rating, photoURL } = req.body;
 
-  const home = new Home(houseName, price, location, rating, photoURL? photoURL.trim() : ''
-); // ✅ lowercase: instance
-  home.save(); // ✅ save instance to file
+  const home = new Home(houseName, price, location, rating, photoURL ? photoURL.trim() : ''
+  ); 
+  home.save(); 
 
   res.render('admin/homeadded', { pageTitle: 'Home added successfully', currentPage: 'homeadded' });
 };
