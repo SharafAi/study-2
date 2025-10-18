@@ -15,4 +15,6 @@ hostRouter.get("/admin-home-list", hostController.getHostHomes);
 
 hostRouter.get("/edit-homes/:homeid", hostController.getEditHomes);
 
+hostRouter.post("/edit-homes", hostController.postEditHomes);
+
 module.exports = hostRouter;

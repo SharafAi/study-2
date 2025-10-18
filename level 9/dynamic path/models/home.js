@@ -15,11 +15,18 @@ module.exports = class Home {
     this.rating = rating;
     this.photoURL = photoURL;
   }
-  
+
   save() {
-    this.id = Math.random().toString();
     Home.fetchAll((RergisterdHomes) => {
-      RergisterdHomes.push(this);
+      if (this.id) { //edit home case
+        RergisterdHomes = RergisterdHomes.map(home =>
+          home.id === this.id ? this : home)
+
+      } else { //add home case
+        this.id = Math.random().toString();
+        RergisterdHomes.push(this);
+      }
+
       fs.writeFile(homeDataPath, JSON.stringify(RergisterdHomes), (error) => {
         console.log("file writing concluded", error);
       })
@@ -33,9 +40,9 @@ module.exports = class Home {
   }
 
   static findById(homeId, callback) {
-    this.fetchAll(homes => {  
+    this.fetchAll(homes => {
       const homeFound = homes.find(home => home.id === homeId);
-      callback(homeFound);     
+      callback(homeFound);
     });
   }
 };

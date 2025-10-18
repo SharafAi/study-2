@@ -11,7 +11,12 @@
             your home here:
         </h1>
 
-        <form action="<%= editing ? '/edit-home' : '/add-home' %>" method="POST" class="flex flex-col gap-4">
+        <form action="<%= editing ? '/edit-homes' : '/add-home' %>" method="POST" class="flex flex-col gap-4">
+
+          <input 
+          type="hidden" 
+          name="id" 
+          value="<%= editing ? home.id : ''%>"/>
 
           <input 
           type="text" 

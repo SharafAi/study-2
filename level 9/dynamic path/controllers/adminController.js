@@ -23,7 +23,7 @@ exports.getEditHomes = (req, res, next) => {
       pageTitle: 'edit your home',
       currentPage: 'host-homes',
       editing: editing,
-      home : home
+      home: home,
     });
   });
 
@@ -46,9 +46,19 @@ exports.getHostHomes = (req, res, next) => {
 exports.postaddHome = (req, res, next) => {
   const { houseName, price, location, rating, photoURL } = req.body;
 
-  const home = new Home(houseName, price, location, rating, photoURL ? photoURL.trim() : ''
-  ); 
+  const home = new Home(houseName, price, location, rating, photoURL ); 
   home.save(); 
 
-  res.render('admin/homeadded', { pageTitle: 'Home added successfully', currentPage: 'homeadded' });
+  res.redirect('/admin-home-list');
+};
+
+
+exports.postEditHomes = (req, res, next) => {
+  const { id, houseName, price, location, rating, photoURL } = req.body;
+
+  const home = new Home(houseName, price, location, rating, photoURL);
+  home.id = id;
+  home.save();
+
+  res.redirect('/admin-home-list');
 };
