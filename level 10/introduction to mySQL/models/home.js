@@ -1,11 +1,5 @@
-//core modulees
-const fs = require('fs');
-const path = require('path');
-const rootDir = require('../utilities/pathUtil');
-const Favourite = require("./favourites");
-
-const homeDataPath = path.join(rootDir, 'data', 'homes.json');
-
+//core modules
+const db = require('../utilities/dataBaseUtil');
 
 
 module.exports = class Home {
@@ -18,42 +12,16 @@ module.exports = class Home {
   }
 
   save() {
-    Home.fetchAll((RergisterdHomes) => {
-      if (this.id) { //edit home case
-        RergisterdHomes = RergisterdHomes.map(home =>
-          home.id === this.id ? this : home)
-
-      } else { //add home case
-        this.id = Math.random().toString();
-        RergisterdHomes.push(this);
-      }
-
-      fs.writeFile(homeDataPath, JSON.stringify(RergisterdHomes), (error) => {
-        console.log("file writing concluded", error);
-      })
-    });
   }
 
-  static fetchAll(callback) {
-    fs.readFile(homeDataPath, (err, data) => {
-      callback(!err ? JSON.parse(data) : []);
-    });
+  static fetchAll() {
+    return db.execute('SELECT * FROM homes');
+      
   }
 
   static findById(homeId, callback) {
-    this.fetchAll(homes => {
-      const homeFound = homes.find(home => home.id === homeId);
-      callback(homeFound);
-    });
   }
 
   static deleteById(homeid, callback) {
-    this.fetchAll(homes => {
-      homes = homes.filter(home => home.id !== homeid);
-      fs.writeFile(homeDataPath, JSON.stringify(homes), error => {
-        Favourite.deleteById(homeid, callback);
-      });
-    })
-
-  }
-};
+  } 
+}

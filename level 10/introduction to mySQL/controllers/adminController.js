@@ -33,7 +33,7 @@ exports.getEditHomes = (req, res, next) => {
 
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll((RergisterdHomes) => {
+  Home.fetchAll().then(([RergisterdHomes]) => {
     res.render("admin/admin-home-list", {
       RergisterdHomes: RergisterdHomes, 
       pageTitle: "host-home-list",
