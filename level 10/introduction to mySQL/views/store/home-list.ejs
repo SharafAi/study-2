@@ -1,0 +1,38 @@
+   <%- include('../partials/head')%>
+  </head>
+  <body>
+    <%- include ('../partials/header')%>
+  <!-- quick styled with ai -->
+   <main class="bg-gray-100 min-h-screen py-10">
+  <h1 class="text-red-600 text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-12">
+    Here are our registered homes:
+  </h1>
+
+  <div class="max-w-4xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <% RergisterdHomes.forEach((home) => { %>
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+      <!-- Home Image -->
+   <img src="<%= home.photoURL ? home.photoURL : '/images/default.png' %>"
+     alt="<%= home.houseName %>"
+     class="w-full h-48 object-cover"
+     onerror="this.onerror=null; this.src='/images/default.png';" />
+
+      <!-- Card Content -->
+      <div class="p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= home.houseName %></h2>
+        <p class="text-gray-500 mb-1"><strong>Location:</strong> <%= home.location %></p>
+        <p class="text-gray-500 mb-1"><strong>Price:</strong> $<%= home.price %> / night</p>
+        <p class="text-yellow-500 font-bold"><strong>Rating:</strong> <%= home.rating %>/10</p>
+       <a class="bg-yellow-500 p-2 rounded-2xl text-amber-50" href="/home-detail/<%= home.id %>">details</a>
+        <button class="bg-pink-500 p-2 rounded-2xl text-amber-50">book</button>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+  
+
+</main>
+
+  </body>
+</html>
