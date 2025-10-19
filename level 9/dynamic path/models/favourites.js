@@ -7,14 +7,14 @@ const FavouriteDataPath = path.join(rootDir, 'data', 'Favourite.json');
 
 module.exports = class Favourite {
   
-  static addToFavourite(Homeid, callback) { 
-  Favourite.getFavourites((Favourites) => {
-    if (Favourites.includes(Homeid)) {
-      callback("home is already marked favourites");
-    } else {
-      Favourites.push(Homeid);
-      fs.writeFile(FavouriteDataPath, JSON.stringify(Favourites), callback);
-    }
+  static addToFavourite(Homeid, callback) {
+    Favourite.getFavourites((Favourites) => {
+      if (Favourites.includes(Homeid)) {
+        callback("home is already marked favourites");
+      } else {
+        Favourites.push(Homeid);
+        fs.writeFile(FavouriteDataPath, JSON.stringify(Favourites), callback);
+      }
     
 
 
@@ -25,8 +25,14 @@ module.exports = class Favourite {
 
   static getFavourites(callback) {
     fs.readFile(FavouriteDataPath, (err, data) => {
-          callback(!err ? JSON.parse(data) : []);
-        });
+      callback(!err ? JSON.parse(data) : []);
+    });
   }
 
+  static deleteById(delHomeId, callback) {
+    Favourite.getFavourites(homeIds => {
+      homeIds = homeIds.filter(homeid => delHomeId !== homeid);
+      fs.writeFile(FavouriteDataPath, JSON.stringify(homeIds), callback);
+    })
+  }
   };

@@ -1,6 +1,6 @@
-const Favourite = require("../models/favourites");
-const Home = require("../models/home"); // import the class
 
+const Home = require("../models/home"); // import the class
+const Favourite = require("../models/favourites");
 // GET / → show all homes
 exports.getIndex = (req, res, next) => {
   Home.fetchAll((RergisterdHomes) => {
@@ -56,6 +56,22 @@ exports.postFavouriteList = (req, res, next) => {
     res.redirect("/favourites");
   })
 }
+
+exports.postRemoveFavourite = (req, res, next) => {
+  const homeid = req.params.homeid;
+  Favourite.deleteById(homeid, error => {
+    if (error) {
+      console.log("error while removing from favourite", error);
+    }
+    res.redirect("/favourites");
+  })
+
+
+ }
+  
+
+
+
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
