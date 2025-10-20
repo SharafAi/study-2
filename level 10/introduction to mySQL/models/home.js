@@ -14,7 +14,13 @@ module.exports = class Home {
   }
 
   save() {
-    return db.execute('INSERT INTO homes(houseName, price, location, rating, photoURL, description)VALUES(?,?,?,?,?,?)',[this.houseName, this.price, this.location, this.rating, this.photoURL, this.description]); 
+    if (this.id) { //update 
+      return db.execute('UPDATE homes SET houseName=?, price=?, location=?, rating=?, photoURL=?, description=? WHERE id=?',[this.houseName, this.price, this.location, this.rating, this.photoURL, this.description, this.id]);
+
+    } else { //insert
+        return db.execute('INSERT INTO homes(houseName, price, location, rating, photoURL, description)VALUES(?,?,?,?,?,?)',[this.houseName, this.price, this.location, this.rating, this.photoURL, this.description]); 
+    }
+  
   }
 
   static fetchAll() {

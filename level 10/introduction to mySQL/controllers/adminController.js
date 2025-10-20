@@ -55,7 +55,7 @@ exports.postaddHome = (req, res, next) => {
 
 
 exports.postEditHomes = (req, res, next) => {
-  const { id, houseName, price, location, rating, photoURL } = req.body;
+  const { id, houseName, price, location, rating, photoURL, description } = req.body;
 
   const home = new Home(houseName, price, location, rating, photoURL, description, id);
   home.save();
