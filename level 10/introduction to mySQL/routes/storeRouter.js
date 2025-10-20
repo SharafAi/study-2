@@ -10,7 +10,7 @@ router.get("/", storeController.getIndex);            // show all homes
 router.get("/bookings", storeController.getBookings);
 router.get("/favourites", storeController.getFavouriteList);
 router.get("/home-list", storeController.getHomesList);
-router.get("/home-detail/:homeId", storeController.getHomeDetails);
+router.get("/home-detail/:homeid", storeController.getHomeDetails);
 router.post("/favourites", storeController.postFavouriteList);
 router.post("/favourites/delete/:homeid", storeController.postRemoveFavourite);
 

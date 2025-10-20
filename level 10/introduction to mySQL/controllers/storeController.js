@@ -72,13 +72,12 @@ exports.postRemoveFavourite = (req, res, next) => {
   
 
 
-
-
 exports.getHomeDetails = (req, res, next) => {
-  const homeId = req.params.homeId;
-  console.log("at homes details page", homeId);
+  const homeid = req.params.homeid;
+  console.log("at homes details page", homeid);
 
-  Home.findById(homeId, home => {
+  Home.findById(homeid).then(([homes]) => {
+    const home = homes[0];
 
     if (!home) {
       return res.status(404).send("Home not found");

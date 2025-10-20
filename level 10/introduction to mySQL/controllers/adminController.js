@@ -13,7 +13,8 @@ exports.getEditHomes = (req, res, next) => {
   const homeid = req.params.homeid;
   const editing = req.query.editing === 'true';
 
-  Home.findById(homeid, home => {
+  Home.findById(homeid).then(([homes]) => {
+    const home = homes[0];
     if (!home) {
       console.log("home not found for editing");
       return res.redirect("/admin/admin-home-list");
@@ -44,9 +45,9 @@ exports.getHostHomes = (req, res, next) => {
 
 
 exports.postaddHome = (req, res, next) => {
-  const { houseName, price, location, rating, photoURL } = req.body;
+  const { houseName, price, location, rating, photoURL, description,  } = req.body;
 
-  const home = new Home(houseName, price, location, rating, photoURL ); 
+  const home = new Home(houseName, price, location, rating, photoURL, description ); 
   home.save(); 
 
   res.redirect('/admin-home-list');
@@ -56,8 +57,7 @@ exports.postaddHome = (req, res, next) => {
 exports.postEditHomes = (req, res, next) => {
   const { id, houseName, price, location, rating, photoURL } = req.body;
 
-  const home = new Home(houseName, price, location, rating, photoURL);
-  home.id = id;
+  const home = new Home(houseName, price, location, rating, photoURL, description, id);
   home.save();
 
   res.redirect('/admin-home-list');
@@ -65,14 +65,11 @@ exports.postEditHomes = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeid = req.params.homeid;
-  console.log("came to delete home", homeid);
-  Home.deleteById(homeid, error => {
-    if (error) {
-       console.log ('error while deleting', error)
-    }
+  console.log("came to delete", homeid);
+  Home.deleteById(homeid).then(() =>  {
    res.redirect('/admin-home-list');
-  })
+  }).catch(error => {
+    console.log("error while deleting home", error);
+  });
 
-
-  
 };
