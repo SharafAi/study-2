@@ -1,16 +1,27 @@
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 
-const Mongo_URL = "mongodb+srv://gundey0_db_user:secretpassword@xayroindustries.d5xjgz9.mongodb.net/?retryWrites=true&w=majority&appName=XayroIndustries";
+const MONGO_URL = "mongodb+srv://gundey0_db_user:shlmh@xayroindustries.d5xjgz9.mongodb.net/?retryWrites=true&w=majority&appName=XayroIndustries";
+
+let _db;
 
 
 const MongoConnect = (callback) => {
-  MongoClient.connect(Mongo_URL)
+  MongoClient.connect(MONGO_URL)
     .then((client) => {
-      callback(client);
+      callback();
+      _db = client.db('airbnb');
     }).catch((error) => {
       console.error("Failed to connect to MongoDB", error);
     });
 }
 
-module.exports = MongoConnect;
+const getDB = () => {
+  if (!_db) {
+    throw new Error('No database found!');
+  }
+  return _db;
+}
+
+exports.MongoConnect = MongoConnect;
+exports.getDB = getDB;
