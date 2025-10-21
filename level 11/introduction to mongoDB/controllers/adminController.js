@@ -1,4 +1,4 @@
-const Home = require("../models/home"); 
+const Home = require("../models/home");
 
 exports.getaddHome = (req, res, next) => {
   res.render('admin/edit-homes', {
@@ -35,7 +35,7 @@ exports.getEditHomes = (req, res, next) => {
 exports.getHostHomes = (req, res, next) => {
   Home.fetchAll().then((RergisterdHomes) => {
     res.render("admin/admin-home-list", {
-      RergisterdHomes: RergisterdHomes, 
+      RergisterdHomes: RergisterdHomes,
       pageTitle: "host-home-list",
       currentPage: "host-homes"
     });
@@ -51,7 +51,8 @@ exports.postaddHome = (req, res, next) => {
     console.log("home added successfully");
     res.redirect('/admin-home-list');
   }
-  )};
+  )
+};
 
 
 exports.postEditHomes = (req, res, next) => {
@@ -60,16 +61,16 @@ exports.postEditHomes = (req, res, next) => {
   const home = new Home(houseName, price, location, rating, photoURL, description, id);
   home.save().then(result => {
     console.log("home updated successfully", result)
-    });
-
-  res.redirect('/admin-home-list');
+  }).finally(() => {
+    res.redirect('/admin-home-list');
+  })
 };
 
 exports.postDeleteHome = (req, res, next) => {
   const homeid = req.params.homeid;
   console.log("came to delete", homeid);
-  Home.deleteById(homeid).then(() =>  {
-   res.redirect('/admin-home-list');
+  Home.deleteById(homeid).then(() => {
+    res.redirect('/admin-home-list');
   }).catch(error => {
     console.log("error while deleting home", error);
   });
