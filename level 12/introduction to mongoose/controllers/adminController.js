@@ -46,7 +46,7 @@ exports.getHostHomes = (req, res, next) => {
 exports.postaddHome = (req, res, next) => {
   const { houseName, price, location, rating, photoURL, description, } = req.body;
 
-  const home = new Home(houseName, price, location, rating, photoURL, description);
+  const home = new Home({ houseName, price, location, rating, photoURL, description });
   home.save().then(() => {
     console.log("home added successfully");
     res.redirect('/admin-home-list');
