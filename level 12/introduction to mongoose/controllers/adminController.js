@@ -33,7 +33,7 @@ exports.getEditHomes = (req, res, next) => {
 
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll().then((RergisterdHomes) => {
+  Home.find().then((RergisterdHomes) => {
     res.render("admin/admin-home-list", {
       RergisterdHomes: RergisterdHomes,
       pageTitle: "host-home-list",
@@ -58,21 +58,41 @@ exports.postaddHome = (req, res, next) => {
 exports.postEditHomes = (req, res, next) => {
   const { id, houseName, price, location, rating, photoURL, description } = req.body;
 
-  const home = new Home(houseName, price, location, rating, photoURL, description, id);
-  home.save().then(result => {
-    console.log("home updated successfully", result)
-  }).finally(() => {
-    res.redirect('/admin-home-list');
-  })
+  Home.findById(id)
+    .then(home => {
+      if (!home) {
+        console.log("Home not found");
+        return res.redirect('/admin-home-list');
+      }
+
+      // Update home fields
+      home.houseName = houseName;
+      home.price = price;
+      home.location = location;
+      home.rating = rating;
+      home.photoURL = photoURL;
+      home.description = description;
+
+      // Save updated home
+      return home.save();
+    })
+    .then(result => {
+      console.log("Home updated successfully", result);
+      res.redirect('/admin-home-list');
+    })
+    .catch(err => {
+      console.log("Error while updating home:", err);
+    });
 };
 
-exports.postDeleteHome = (req, res, next) => {
-  const homeid = req.params.homeid;
-  console.log("came to delete", homeid);
-  Home.deleteById(homeid).then(() => {
-    res.redirect('/admin-home-list');
-  }).catch(error => {
-    console.log("error while deleting home", error);
-  });
 
-};
+    exports.postDeleteHome = (req, res, next) => {
+      const homeid = req.params.homeid;
+      console.log("came to delete", homeid);
+      Home.findByIdAndDelete(homeid).then(() => {
+        res.redirect('/admin-home-list');
+      }).catch(error => {
+        console.log("error while deleting home", error);
+      });
+
+    };
