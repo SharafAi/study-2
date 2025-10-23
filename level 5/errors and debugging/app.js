@@ -3,8 +3,7 @@
 //eternal modules
 const express = require('express');
 
-//local modules
-const RequestHandler = require('./user');
+
 
 const app = express();
 app.use("/", (req, res, next) => { ///try app.use, app.get, app.post

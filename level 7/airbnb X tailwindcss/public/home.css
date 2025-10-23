@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header{
+    background-color: #ff385c;
+    padding: 10px;
+    text-align: center;
+}
+
+main{
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: aquamarine;
+    border-radius: 2px;
+}

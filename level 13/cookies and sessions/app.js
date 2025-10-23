@@ -9,8 +9,7 @@ const storeRouter = require('./routes/storeRouter');
 const hostRouter = require('./routes/hostRouter');
 const rootDir = require('./utilities/pathUtil');
 const errorsController = require("./controllers/errors");
-const { MongoConnect } = require('./utilities/dataBaseUtil');
-
+const { default: mongoose } = require('mongoose');
 
 
 
@@ -34,9 +33,15 @@ app.use(hostRouter);
 app.use(errorsController.PageNotFound);
 
 const PORT = 3004;
-MongoConnect(() => {
-  app.listen(PORT, () => {
+const DB_PATH = "mongodb+srv://gundey0_db_user:shlmh@xayroindustries.d5xjgz9.mongodb.net/airbnb?retryWrites=true&w=majority&appName=XayroIndustries";//have added the database name 'airbnb' at the end of the connection string after the .mongodb.net/ why? because we want to connect to that specific database
+
+mongoose.connect(DB_PATH).then(() => {
+  console.log("Connected to MongoDB via Mongoose");
+   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
-})
+
+ }).catch((err) => {
+   console.error("Failed to connect to MongoDB via Mongoose", err);
+ });
 
