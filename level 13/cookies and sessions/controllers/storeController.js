@@ -4,6 +4,7 @@ const Favourite = require("../models/favourites");
 
 
 exports.getIndex = (req, res, next) => {
+  console.log("session values:", req.session);
   Home.find().then(RergisterdHomes => {
     res.render("store/index", {
       RergisterdHomes: RergisterdHomes,

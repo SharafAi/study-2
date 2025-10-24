@@ -1,9 +1,11 @@
 // Core modules
 const path = require('path');
 
-
 // External modules
 const express = require('express');
+const session = require('express-session');
+const mongoDbstore = require('connect-mongodb-session')(session);
+const DB_PATH = "mongodb+srv://gundey0_db_user:shlmh@xayroindustries.d5xjgz9.mongodb.net/airbnb?retryWrites=true&w=majority&appName=XayroIndustries";
 
 // Local modules
 const authRouter = require('./routes/authRouter');
@@ -23,16 +25,32 @@ app.set("views", [
   path.join(__dirname, "views"),
   path.join(__dirname, "authentication")
 ]);
-
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+const store = new mongoDbstore({
+  uri: DB_PATH,
+  collection: 'sessions'
+});
+
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware to handle cookies and sessions
+app.use(session({
+  secret: "shlmh",
+  resave: false,
+  saveUninitialized: true,
+  store: store
+}));
+
+// Middleware to set isLoggedIn based on session
 app.use((req, res, next) => {
-  req.isLoggedIn = req.get('cookie')? req.get('cookie').split('=')[1] === 'true' : false;
+  req.isLoggedIn = req.session.isLoggedIn;
   next();
- });
+});
+
 
 // Routers
 app.use(authRouter);
@@ -52,7 +70,6 @@ app.use(errorsController.PageNotFound);
 
 // Database connection
 const PORT = 3004;
-const DB_PATH = "mongodb+srv://gundey0_db_user:shlmh@xayroindustries.d5xjgz9.mongodb.net/airbnb?retryWrites=true&w=majority&appName=XayroIndustries";
 
 mongoose.connect(DB_PATH).then(() => {
   console.log("Connected to MongoDB via Mongoose");
