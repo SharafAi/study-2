@@ -1,0 +1,56 @@
+<%- include('../partials/head')%>
+  </head>
+
+  <body>
+    <%- include ('../partials/header')%>
+      <!-- quick styled with ai -->
+      <main class="bg-gray-100 min-h-screen py-10">
+        <h1 class="text-red-600 text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-12">
+          hey host! here are your homes:
+        </h1>
+
+        <div class="max-w-4xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <% RergisterdHomes.forEach((home)=> { %>
+            <div
+              class="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+              <!-- Home Image -->
+              <img src="<%= home.photoURL ? home.photoURL : '/images/default.png' %>" alt="<%= home.houseName %>"
+                class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='/images/default.png';" />
+              <!-- Card Content -->
+              <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">
+                  <%= home.houseName %>
+                </h2>
+                <p class="text-gray-500 mb-1"><strong>Location:</strong>
+                  <%= home.location %>
+                </p>
+                <p class="text-gray-500 mb-1"><strong>Price:</strong> $<%= home.price %> / night</p>
+                <p class="text-yellow-500 font-bold"><strong>Rating:</strong>
+                  <%= home.rating %>/10
+                </p>
+                <div class="flex gap-3">
+                  <a href="/edit-homes/<%= home._id %>?editing=true"
+                    class="flex-1 text-center bg-blue-600 hover:bg-blue-700 transition-colors text-white font-semibold py-2 rounded-lg">
+                    Edit
+                  </a>
+
+                  <form action="/delete-home/<%= home._id %>" method="POST" class="flex-1">
+                    <button type="submit"
+                      class="w-full bg-red-600 hover:bg-red-700 transition-colors text-white font-semibold py-2 rounded-lg">
+                      Delete
+                    </button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+            <% }) %>
+        </div>
+
+
+
+      </main>
+
+  </body>
+
+  </html>

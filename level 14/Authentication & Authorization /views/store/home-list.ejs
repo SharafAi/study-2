@@ -1,0 +1,68 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+  <%- include('../partials/header') %>
+
+  <main class="py-10">
+    <h1 class="text-red-600 text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-12">
+      Here are our registered homes:
+    </h1>
+
+    <div class="max-w-6xl mx-auto grid gap-8 sm:grid-cols-2 lg:grid-cols-3 px-4">
+      <% RergisterdHomes.forEach((home) => { %>
+        <div
+          class="bg-white shadow-xl rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+          
+          <!-- Home Image -->
+          <img 
+            src="<%= home.photoURL ? home.photoURL : '/images/default.png' %>" 
+            alt="<%= home.houseName %>"
+            class="w-full h-52 object-cover" 
+            onerror="this.onerror=null; this.src='/images/default.png';" 
+          />
+
+          <!-- Card Content -->
+          <div class="p-6 flex flex-col justify-between flex-grow">
+            <div>
+              <h2 class="text-2xl font-semibold text-gray-800 mb-2">
+                <%= home.houseName %>
+              </h2>
+              <p class="text-gray-500 mb-1">
+                <strong>Location:</strong> <%= home.location %>
+              </p>
+              <p class="text-gray-500 mb-1">
+                <strong>Price:</strong> $<%= home.price %> / night
+              </p>
+              <p class="text-yellow-500 font-bold mb-4">
+                <strong>Rating:</strong> <%= home.rating %>/10
+              </p>
+            </div>
+
+           <!-- Buttons -->
+<div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+  <a
+    href="/home-detail/<%= home._id %>"
+    class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition transform hover:scale-105 duration-200"
+  >
+    Details
+  </a>
+
+  <button
+    class="flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition transform hover:scale-105 duration-200"
+  >
+    Book
+  </button>
+
+  <div class="flex items-center justify-center bg-gray-200 rounded-xl transition transform hover:scale-105 duration-200">
+    <%- include('../partials/favourites', { home: home }) %>
+  </div>
+</div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </main>
+
+</body>
+</html>

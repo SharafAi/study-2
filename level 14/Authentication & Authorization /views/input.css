@@ -1,0 +1,37 @@
+@import "tailwindcss";
+/* tailwind entry file */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Optional: global body font size for mobile first */
+body {
+  @apply text-base; /* mobile default */
+}
+
+
+/* Global responsive styles */
+@layer base {
+  body {
+    font-size: 16px; /* default for mobile */
+  }
+
+  @screen sm {
+    body {
+      font-size: 18px;
+    }
+  }
+
+  @screen md {
+    body {
+      font-size: 20px;
+    }
+  }
+
+  @screen lg {
+    body {
+      font-size: 22px;
+    }
+  }
+}
