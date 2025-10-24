@@ -8,7 +8,8 @@ exports.getIndex = (req, res, next) => {
     res.render("store/index", {
       RergisterdHomes: RergisterdHomes,
       pageTitle: "airbnb home",
-      currentPage: "home"
+      currentPage: "home",
+      isLoggedIn: req.isLoggedIn
     });
   })
 };
@@ -18,7 +19,8 @@ exports.getHomesList = (req, res, next) => {
     res.render("store/home-list", {
       RergisterdHomes: RergisterdHomes,
       pageTitle: "Home list",
-      currentPage: "Homelist"
+      currentPage: "Homelist",
+      isLoggedIn: req.isLoggedIn
     });
   });
 };
@@ -28,7 +30,8 @@ exports.getBookings = (req, res, next) => {
     res.render("store/bookings", {
       RergisterdHomes: RergisterdHomes,
       pageTitle: "my bookings",
-      currentPage: "booking"
+      currentPage: "booking",
+      isLoggedIn: req.isLoggedIn
     });
   });
 };
@@ -41,7 +44,8 @@ exports.getFavouriteList = (req, res, next) => {
       res.render("store/favourites", {
         FavouriteHomes: FavouriteHomes,
         pageTitle: "my favourites",
-        currentPage: "favourites"
+        currentPage: "favourites",
+        isLoggedIn: req.isLoggedIn
       });
     });
 };
@@ -97,7 +101,8 @@ exports.getHomeDetails = (req, res, next) => {
       res.render("store/home-detail", {
         pageTitle: "home detail",
         currentPage: "Home",
-        home: home // pass the found home to your template
+        home: home,
+        isLoggedIn: req.isLoggedIn
       });
     }
   });

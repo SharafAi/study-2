@@ -5,7 +5,7 @@ const router = express.Router();
 // local controllers
 const storeController = require("../controllers/storeController");
 
-// 👉 define routes and connect to controller functions
+// define routes and connect to controller functions
 router.get("/", storeController.getIndex);            // show all homes
 router.get("/bookings", storeController.getBookings);
 router.get("/favourites", storeController.getFavouriteList);
