@@ -1,13 +1,14 @@
 // Core modules
 const path = require('path');
 
+
 // External modules
 const express = require('express');
 
 // Local modules
+const authRouter = require('./routes/authRouter');
 const storeRouter = require('./routes/storeRouter');
 const hostRouter = require('./routes/hostRouter');
-const authRouter = require('./routes/authRouter');
 const rootDir = require('./utilities/pathUtil');
 const errorsController = require("./controllers/errors");
 const { default: mongoose } = require('mongoose');
@@ -28,20 +29,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  req.isLoggedIn = req.get('cookie')? req.get('cookie').split('=')[1] === 'true' : false;
+  next();
+ });
 
 // Routers
-app.use(storeRouter);
-app.use(hostRouter);
 app.use(authRouter);
-app.use("/admin", (req, res, next) => {
+app.use(storeRouter);
+
+app.use((req, res, next) => {
   if (req.isLoggedIn) {
     next();
   } else {
     res.redirect("/login");
   }
+}, hostRouter);
 
-});
-app.use("/admin", hostRouter);
+app.use("/host", hostRouter);
 // Error handler
 app.use(errorsController.PageNotFound);
 

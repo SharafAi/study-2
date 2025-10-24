@@ -7,7 +7,8 @@ const authController = require("../controllers/authController");
 
 // define routes and connect to controller functions
 authRouter.get("/login", authController.getLogin);   
-authRouter.post("/login", authController.postLogin);        
+authRouter.post("/login", authController.postLogin);     
+authRouter.post("/logout", authController.getLogout);   
 
 
 
