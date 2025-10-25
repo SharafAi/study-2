@@ -1,0 +1,92 @@
+<%- include('./partials/head') %>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <%- include('./partials/header') %>
+
+  <!-- Login Form Section -->
+  <main class="flex-grow flex justify-center items-center py-10">
+    <div class="w-full max-w-md bg-white border-2 border-blue-400 rounded-2xl shadow-xl p-8">
+
+      <!-- Title -->
+      <h1 class="text-3xl font-bold text-center text-purple-700 mb-6">
+        Login to Your Account
+      </h1>
+
+      <!-- Login Form -->
+      <form action="/login" method="POST" class="space-y-5">
+
+        <!-- Display Errors -->
+        <% if (errors && errors.length > 0) { %>
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
+            <ul class="list-disc list-inside">
+              <% errors.forEach(function(error) { %>
+                <li><%= error %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-1">Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value="<%= oldInput && oldInput.email ? oldInput.email : '' %>"
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
+                   <%= errors && errors.some(e => e.toLowerCase().includes('email')) ? ' border-red-500 bg-red-50 blink-field' : ' border-gray-300' %>"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-gray-700 font-semibold mb-1">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            value="" 
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
+                   <%= errors && errors.some(e => e.toLowerCase().includes('password')) ? ' border-red-500 bg-red-50 blink-field' : ' border-gray-300' %>"
+            required
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-6">
+          <input
+            type="submit"
+            value="Login"
+            class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 cursor-pointer"
+          />
+        </div>
+
+      </form>
+
+      <!-- Redirect to Signup -->
+      <p class="text-center text-gray-600 text-sm mt-4">
+        Don’t have an account?
+        <a href="/signup" class="text-blue-500 hover:underline font-semibold">Sign Up</a>
+      </p>
+
+    </div>
+  </main>
+
+  <style>
+    @keyframes blink {
+      0%, 100% { background-color: #fef2f2; } /* red-50 */
+      50% { background-color: #fee2e2; } /* slightly darker red */
+    }
+
+    .blink-field {
+      animation: blink 0.8s ease-in-out 1;
+    }
+  </style>
+
+</body>
+</html>
