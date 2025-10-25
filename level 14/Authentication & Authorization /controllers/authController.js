@@ -8,7 +8,8 @@ exports.getSignup = (req, res, next) => {
     currentPage: 'signup',
     isLoggedIn: false,
     errors: [],
-    oldInput: { firstname: '', lastname: '', email: '', password: '', confirmPassword: '', usertype: '', terms: '' }
+    oldInput: { firstname: '', lastname: '', email: '', password: '', confirmPassword: '', usertype: '', terms: '' },
+    user: {},
   });
 };
 
@@ -87,9 +88,9 @@ exports.postSignup = [
         pageTitle: 'signup',
         isLoggedIn: false,
         currentPage: 'signup',
-
         errors: errors.array().map(error => error.msg),
-        oldInput: { firstname, lastname, email, password, usertype, }
+        oldInput: { firstname, lastname, email, password, usertype, },
+        user: {},
       });
     }
 
@@ -109,27 +110,22 @@ exports.postSignup = [
           isLoggedIn: false,
           currentPage: 'signup',
           errors: [err.message],
-          oldInput: { firstname, lastname, email, password, usertype, }
+          oldInput: { firstname, lastname, email, password, usertype, },
+          user: {},
         });
       });
   }
 ];
 
-exports.getLogin = (req, res, next) => {
-  res.render('login', {
-    pageTitle: 'login',
-    currentPage: 'login',
-    isLoggedIn: false
-  });
-};
 
 exports.getLogin = (req, res, next) => {
   res.render('login', {
     pageTitle: 'login',
     currentPage: 'login',
     isLoggedIn: false,
-    errors: [],           // always pass errors array
-    oldInput: { email: '', password: '' }  // always pass old input
+    errors: [],  
+    oldInput: { email: '' },
+    user: {},
   });
 };
 
@@ -143,7 +139,8 @@ exports.postLogin = async (req, res, next) => {
       currentPage: 'login',
       isLoggedIn: false,
       errors: ['User does not exist.'],   // use array for EJS
-      oldInput: { email }
+      oldInput: { email },
+      user: {},
     });
   }
 
@@ -154,7 +151,8 @@ exports.postLogin = async (req, res, next) => {
       currentPage: 'login',
       isLoggedIn: false,
       errors: ['Incorrect password.'],
-      oldInput: { email }
+      oldInput: { email },
+      user: {},
     });
   }
   req.session.isLoggedIn = true;
