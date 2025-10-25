@@ -1,4 +1,6 @@
 const { check, validationResult } = require('express-validator');
+const User = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 exports.getSignup = (req, res, next) => {
   res.render('signup', {
@@ -6,7 +8,7 @@ exports.getSignup = (req, res, next) => {
     currentPage: 'signup',
     isLoggedIn: false,
     errors: [],
-    oldInput: {firstname: '', lastname: '', email: '', password: '', confirmPassword: '', usertype: '', terms: ''}
+    oldInput: { firstname: '', lastname: '', email: '', password: '', confirmPassword: '', usertype: '', terms: '' }
   });
 };
 
@@ -68,7 +70,7 @@ exports.postSignup = [
   check('terms')
     .notEmpty()
     .withMessage('You must accept the terms and conditions.')
-    .custom((value, { req }) => { 
+    .custom((value, { req }) => {
       if (value !== 'on') {
         throw new Error('You must accept the terms and conditions.');
       }
@@ -85,15 +87,31 @@ exports.postSignup = [
         pageTitle: 'signup',
         isLoggedIn: false,
         currentPage: 'signup',
-        
+
         errors: errors.array().map(error => error.msg),
-        oldInput: { firstname, lastname, email, password, usertype,  }
+        oldInput: { firstname, lastname, email, password, usertype, }
       });
     }
 
-    console.log(req.body);
-    // req.session.isLoggedIn = true; // Uncomment if you want to auto-login
-    res.redirect('/login');
+    // If validation passes, proceed with signup logic (e.g., save user to DB)
+    bcrypt.hash(password, 12)
+      .then(hashedPassword => {
+        const user = new User({
+          firstname, lastname, email, password: hashedPassword, usertype,
+        });
+        return user.save()
+      })
+      .then(() => {
+        res.redirect('/login');
+      }).catch(err => {
+        return res.status(422).render('signup', {
+          pageTitle: 'signup',
+          isLoggedIn: false,
+          currentPage: 'signup',
+          errors: [err.message],
+          oldInput: { firstname, lastname, email, password, usertype, }
+        });
+      });
   }
 ];
 
@@ -105,9 +123,43 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
-  console.log(req.body);
+exports.getLogin = (req, res, next) => {
+  res.render('login', {
+    pageTitle: 'login',
+    currentPage: 'login',
+    isLoggedIn: false,
+    errors: [],           // always pass errors array
+    oldInput: { email: '', password: '' }  // always pass old input
+  });
+};
+
+exports.postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(401).render('login', {
+      pageTitle: 'login',
+      currentPage: 'login',
+      isLoggedIn: false,
+      errors: ['User does not exist.'],   // use array for EJS
+      oldInput: { email }
+    });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(401).render('login', {
+      pageTitle: 'login',
+      currentPage: 'login',
+      isLoggedIn: false,
+      errors: ['Incorrect password.'],
+      oldInput: { email }
+    });
+  }
   req.session.isLoggedIn = true;
+  req.session.user = user;
+  await req.session.save();
   res.redirect('/');
 };
 

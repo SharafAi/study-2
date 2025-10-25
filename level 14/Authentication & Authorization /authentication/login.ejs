@@ -18,15 +18,29 @@
       <!-- Login Form -->
       <form action="/login" method="POST" class="space-y-5">
 
-        <!-- Email or Username -->
+        <!-- Display Errors -->
+        <% if (errors && errors.length > 0) { %>
+          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
+            <ul class="list-disc list-inside">
+              <% errors.forEach(function(error) { %>
+                <li><%= error %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+
+        <!-- Email -->
         <div>
-          <label class="block text-gray-700 font-semibold mb-1">Email or Username</label>
+          <label class="block text-gray-700 font-semibold mb-1">Email</label>
           <input
-            type="text"
-            name="username"
-            placeholder="Enter your email or username"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            required />
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value="<%= oldInput && oldInput.email ? oldInput.email : '' %>"
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
+                   <%= errors && errors.some(e => e.toLowerCase().includes('email')) ? ' border-red-500 bg-red-50 blink-field' : ' border-gray-300' %>"
+            required
+          />
         </div>
 
         <!-- Password -->
@@ -36,8 +50,11 @@
             type="password"
             name="password"
             placeholder="Enter your password"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            required />
+            value="" 
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400
+                   <%= errors && errors.some(e => e.toLowerCase().includes('password')) ? ' border-red-500 bg-red-50 blink-field' : ' border-gray-300' %>"
+            required
+          />
         </div>
 
         <!-- Submit Button -->
@@ -45,7 +62,8 @@
           <input
             type="submit"
             value="Login"
-            class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 cursor-pointer" />
+            class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition duration-300 cursor-pointer"
+          />
         </div>
 
       </form>
@@ -58,6 +76,17 @@
 
     </div>
   </main>
+
+  <style>
+    @keyframes blink {
+      0%, 100% { background-color: #fef2f2; } /* red-50 */
+      50% { background-color: #fee2e2; } /* slightly darker red */
+    }
+
+    .blink-field {
+      animation: blink 0.8s ease-in-out 1;
+    }
+  </style>
 
 </body>
 </html>
