@@ -1,59 +1,68 @@
-   <%- include('../partials/head')%>
-   <link href="css/output.css" rel="stylesheet">
+<%- include('../partials/head')%>
+  <link href="css/output.css" rel="stylesheet">
   </head>
+
   <body>
     <%- include ('../partials/header')%>
-  <!-- quick styled with ai -->
-   <main class="bg-gray-100 min-h-screen py-10">
-  <h1 class="text-red-600 text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-12">
-    welcome to airbnb home
-  </h1>
+      <!-- quick styled with ai -->
+      <main class="bg-gray-100 min-h-screen py-10">
+        <h1 class="text-red-600 text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-12">
+          welcome to airbnb home
+        </h1>
 
-  <div class="max-w-4xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-  <% RergisterdHomes.forEach((home) => { %>
-    <div class="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-      <!-- Home Image -->
-<div class="bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-  <!-- Home Image -->
-  <img 
-    src="<%= home.photoURL ? home.photoURL : '/images/default.png' %>" 
-    alt="<%= home.houseName %>"
-    class="w-full h-56 object-cover"
-    onerror="this.onerror=null; this.src='/images/default.png';"
-  />
+        <div class="max-w-4xl mx-auto grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <% RergisterdHomes.forEach((home)=> { %>
+            <div
+              class="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+              <!-- Home Image -->
+              <div
+                class="bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+                <!-- Home Image -->
+                <img src="<%= home.photo ? home.photo : '/images/default.png' %>" alt="<%= home.houseName %>"
+                  class="w-full h-56 object-cover" onerror="this.onerror=null; this.src='/images/default.png';" />
 
-  <!-- Card Content -->
-  <div class="p-5 space-y-2">
-    <h2 class="text-2xl font-semibold text-gray-900"><%= home.houseName %></h2>
-    <p class="text-gray-600"><strong>Location:</strong> <%= home.location %></p>
-    <p class="text-gray-600"><strong>Price:</strong> $<%= home.price %> / night</p>
+                <!-- Card Content -->
+                <div class="p-5 space-y-2">
+                  <h2 class="text-2xl font-semibold text-gray-900">
+                    <%= home.houseName %>
+                  </h2>
+                  <p class="text-gray-600"><strong>Location:</strong>
+                    <%= home.location %>
+                  </p>
+                  <p class="text-gray-600"><strong>Price:</strong> $<%= home.price %> / night</p>
 
-    <!-- Rating with star -->
-    <div class="flex items-center">
-      <span class="text-yellow-400 text-lg">★</span>
-      <span class="ml-1 text-gray-700 font-medium"><%= home.rating %>/10</span>
-    </div>
+                  <!-- Rating with star -->
+                  <div class="flex items-center">
+                    <span class="text-yellow-400 text-lg">★</span>
+                    <span class="ml-1 text-gray-700 font-medium">
+                      <%= home.rating %>/10
+                    </span>
+                  </div>
 
-    <!-- Optional Description -->
-    <% if (home.description) { %>
-      <p class="text-gray-500 italic text-sm"><%= home.description %></p>
-    <% } %>
+                  <!-- Optional Description -->
+                  <% if (home.description) { %>
+                    <p class="text-gray-500 italic text-sm">
+                      <%= home.description %>
+                    </p>
+                    <% } %>
 
-    <!-- Book Button -->
-    <div class="pt-3">
-      <button class="w-full bg-pink-600 hover:bg-pink-700 transition-colors text-white font-semibold py-2 rounded-lg">
-        Book Now
-      </button>
-    </div>
-  </div>
-</div>
-    </div>
-  <% }) %>
-</div>
+                      <!-- Book Button -->
+                      <div class="pt-3">
+                        <button
+                          class="w-full bg-pink-600 hover:bg-pink-700 transition-colors text-white font-semibold py-2 rounded-lg">
+                          Book Now
+                        </button>
+                      </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+        </div>
 
-  
 
-</main>
+
+      </main>
 
   </body>
-</html>
+
+  </html>

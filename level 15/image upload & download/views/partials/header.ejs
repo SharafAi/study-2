@@ -1,4 +1,4 @@
-<header class="bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 shadow-md">
+<header class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 shadow-md">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
 
     <!-- Logo -->
@@ -58,6 +58,9 @@
     </nav>
   </div>
 </header>
+
+<!-- Spacer to prevent content behind fixed navbar -->
+<div class="h-16 md:h-20"></div>
 
 <script>
   const btn = document.getElementById('mobile-menu-btn');
